@@ -31,7 +31,7 @@ docker run \
   --network=host \
   --volume "$(pwd):/workspace" \
   ghcr.io/lightvik/packer-oraclelinux:latest \
-  bios
+  uefi
 ```
 
 > VNC-консоль установщика доступна на `127.0.0.1:59592` во время сборки.
