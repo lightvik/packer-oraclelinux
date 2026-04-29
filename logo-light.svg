@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 436 90" width="436" height="90" role="img" aria-label="packer-oraclelinux">
+  <polygon style="fill:none;stroke:#1c1c2e;stroke-width:1.8;stroke-linejoin:round" points="45,8 82,27.5 82,62.5 45,82 8,62.5 8,27.5"></polygon>
+  <polygon style="fill:#C74634" points="45,27 63,36.5 45,46 27,36.5"></polygon>
+  <polygon style="fill:#5A0F08" points="27,36.5 45,46 45,63 27,53.5"></polygon>
+  <polygon style="fill:#8B2015" points="63,36.5 45,46 45,63 63,53.5"></polygon>
+  <text x="104" y="45" style="font-family:&#39;Courier New&#39;,Courier,monospace;font-size:30px;dominant-baseline:central;fill:#1c1c2e;">
+    <tspan font-weight="700">packer</tspan><tspan fill="#C74634" font-weight="700">-</tspan><tspan font-weight="400">oraclelinux</tspan>
+  </text>
+</svg>

@@ -1,0 +1,4 @@
+output/
+*.iso
+packer_cache/
+crash.log
