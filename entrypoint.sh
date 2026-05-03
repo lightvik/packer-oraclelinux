@@ -23,6 +23,19 @@ clean_output() {
   fi
 }
 
+run_packer() {
+  local hcl="$1"
+  packer build "$hcl" &
+  local pid=$!
+  # При Ctrl+C packer ждёт graceful shutdown QEMU (до shutdown_timeout).
+  # Убиваем packer и все его дочерние процессы (QEMU) принудительно.
+  trap 'pkill -KILL -P $pid 2>/dev/null; kill -KILL $pid 2>/dev/null; exit 130' INT TERM
+  wait "$pid"
+  local rc=$?
+  trap - INT TERM
+  return $rc
+}
+
 # ── validate args ─────────────────────────────────────────────────────────────
 
 [[ $# -eq 1 ]] || usage
@@ -36,7 +49,7 @@ FIRMWARE="${1,,}"   # lowercase
 run_bios() {
   clean_output oraclelinux-bios.pkr.hcl
   step "Запуск BIOS-сборки"
-  exec packer build oraclelinux-bios.pkr.hcl
+  run_packer oraclelinux-bios.pkr.hcl
 }
 
 # ── uefi ──────────────────────────────────────────────────────────────────────
@@ -44,7 +57,7 @@ run_bios() {
 run_uefi() {
   clean_output oraclelinux-uefi.pkr.hcl
   step "Запуск UEFI-сборки"
-  exec packer build oraclelinux-uefi.pkr.hcl
+  run_packer oraclelinux-uefi.pkr.hcl
 }
 
 # ── main ──────────────────────────────────────────────────────────────────────
