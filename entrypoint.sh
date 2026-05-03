@@ -11,6 +11,18 @@ usage() {
   exit 1
 }
 
+clean_output() {
+  local hcl="$1"
+  local output_dir
+  output_dir=$(grep -oP 'output_directory\s*=\s*"\K[^"]+' "$hcl" | head -1)
+  output_dir="${output_dir:-output}"
+
+  if [[ -d "$output_dir" ]]; then
+    step "Удаление предыдущей директории сборки: $output_dir"
+    rm -rf "$output_dir"
+  fi
+}
+
 # ── validate args ─────────────────────────────────────────────────────────────
 
 [[ $# -eq 1 ]] || usage
@@ -22,6 +34,7 @@ FIRMWARE="${1,,}"   # lowercase
 # ── bios ──────────────────────────────────────────────────────────────────────
 
 run_bios() {
+  clean_output oraclelinux-bios.pkr.hcl
   step "Запуск BIOS-сборки"
   exec packer build oraclelinux-bios.pkr.hcl
 }
@@ -29,6 +42,7 @@ run_bios() {
 # ── uefi ──────────────────────────────────────────────────────────────────────
 
 run_uefi() {
+  clean_output oraclelinux-uefi.pkr.hcl
   step "Запуск UEFI-сборки"
   exec packer build oraclelinux-uefi.pkr.hcl
 }
